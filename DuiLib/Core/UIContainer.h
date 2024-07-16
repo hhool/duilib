@@ -54,7 +54,7 @@ public:
     void SetMouseEnabled(bool bEnable = true);
 
     virtual RECT GetInset() const;
-    virtual void SetInset(RECT rcInset); // 设置内边距，相当于设置客户区
+    virtual void SetInset(RECT rcInset); // 璁剧疆鍐呰竟璺濓紝鐩稿綋浜庤缃鎴峰尯
     virtual int GetChildPadding() const;
     virtual void SetChildPadding(int iPadding);
 	virtual UINT GetChildAlign() const;
@@ -123,7 +123,7 @@ protected:
     bool m_bAutoDestroy;
     bool m_bDelayedDestroy;
     bool m_bMouseChildEnabled;
-    bool m_bScrollProcess; // 防止SetPos循环调用
+    bool m_bScrollProcess; // 闃叉SetPos寰幆璋冪敤
 
     CScrollBarUI* m_pVerticalScrollBar;
     CScrollBarUI* m_pHorizontalScrollBar;

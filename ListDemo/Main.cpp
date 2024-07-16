@@ -1,6 +1,6 @@
 /*
 * Code By Tojen (qq:342269237)
-* ½çÃæÉè¼ÆÍ¼Æ¬×ÊÔ´80%Ô­´´£¬²¼¾ÖÍêÈ«Ô­´´,Ñ§Ï°×÷Æ·£¬²»ºÃÇëÅÄ×©
+* ç•Œé¢è®¾è®¡å›¾ç‰‡èµ„æº80%åŸåˆ›ï¼Œå¸ƒå±€å®Œå…¨åŸåˆ›,å­¦ä¹ ä½œå“ï¼Œä¸å¥½è¯·æ‹ç –
 */
 #include <objbase.h>
 #include <zmouse.h>
@@ -15,15 +15,15 @@ using namespace DuiLib;
 
 #define WM_ADDLISTITEM WM_USER + 50
 /*
-* ´æ·ÅµÚ¶şÁĞÊı¾İ
+* å­˜æ”¾ç¬¬äºŒåˆ—æ•°æ®
 */
 std::vector<std::string> domain;
 /*
-* ´æ·ÅµÚÈıÁĞÊı¾İ
+* å­˜æ”¾ç¬¬ä¸‰åˆ—æ•°æ®
 */
 std::vector<std::string> desc;
 /*
-*  Ïß³Ìº¯ÊıÖĞ´«ÈëµÄ½á¹¹Ìå±äÁ¿£¬Ê¹ÓÃÏß³ÌÎªÁËÊ¹½çÃæÏß³ÌÁ¢¼´·µ»Ø£¬·ÀÖ¹¿¨×¡£¬ÄãÃÇ¶®µÃ¡£
+*  çº¿ç¨‹å‡½æ•°ä¸­ä¼ å…¥çš„ç»“æ„ä½“å˜é‡ï¼Œä½¿ç”¨çº¿ç¨‹ä¸ºäº†ä½¿ç•Œé¢çº¿ç¨‹ç«‹å³è¿”å›ï¼Œé˜²æ­¢å¡ä½ï¼Œä½ ä»¬æ‡‚å¾—ã€‚
 */
 struct Prama
 {
@@ -79,7 +79,7 @@ public:
             CDuiString tDomain = prama->tDomain;
             //-------------------------------------
             /*
-            * Ìí¼ÓÊı¾İÑ­»·
+            * æ·»åŠ æ•°æ®å¾ªç¯
             */
             for(int i=0; i<100; i++)
             {
@@ -96,7 +96,7 @@ public:
                     ::PostMessage(prama->hWnd, WM_ADDLISTITEM, 0L, (LPARAM)pListElement);
                 }
                 /*
-                *	Sleep ÎªÁËÕ¹Ê¾Ìí¼ÓµÄ¶¯Ì¬Ğ§¹û£¬¹Ê·ÅÂıÁËÌí¼ÓËÙ¶È£¬Í¬Ê±¿ÉÒÔ¿´µ½Ìí¼Ó¹ı³ÌÖĞ½çÃæÈÔÈ»¿ÉÒÔÏìÓ¦
+                *	Sleep ä¸ºäº†å±•ç¤ºæ·»åŠ çš„åŠ¨æ€æ•ˆæœï¼Œæ•…æ”¾æ…¢äº†æ·»åŠ é€Ÿåº¦ï¼ŒåŒæ—¶å¯ä»¥çœ‹åˆ°æ·»åŠ è¿‡ç¨‹ä¸­ç•Œé¢ä»ç„¶å¯ä»¥å“åº”
                 */
                 ::Sleep(100);
             }
@@ -136,7 +136,7 @@ public:
         HANDLE hThread = CreateThread(NULL,0,&ListMainForm::Search, (LPVOID)prama,  0,&dwThreadID);
     }
     /*
-    * ¹Ø¼üµÄ»Øµ÷º¯Êı£¬IListCallbackUI ÖĞµÄÒ»¸öĞéº¯Êı£¬äÖÈ¾Ê±ºò»áµ÷ÓÃ,ÔÚ[1]ÖĞÉèÖÃÁË»Øµ÷¶ÔÏó
+    * å…³é”®çš„å›è°ƒå‡½æ•°ï¼ŒIListCallbackUI ä¸­çš„ä¸€ä¸ªè™šå‡½æ•°ï¼Œæ¸²æŸ“æ—¶å€™ä¼šè°ƒç”¨,åœ¨[1]ä¸­è®¾ç½®äº†å›è°ƒå¯¹è±¡
     */
     LPCTSTR GetItemText(CControlUI* pControl, int iIndex, int iSubItem)
     {
@@ -229,7 +229,7 @@ public:
             sMessage += domain[iIndex].c_str();
 
 #endif
-            ::MessageBox(NULL, sMessage.GetData(), _T("ÌáÊ¾(by tojen)"), MB_OK);
+            ::MessageBox(NULL, sMessage.GetData(), _T("æç¤º(by tojen)"), MB_OK);
         }
         else if(msg.sType == _T("menu")) 
         {
@@ -381,7 +381,7 @@ public:
 
     LRESULT OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
-        // ÓĞÊ±»áÔÚÊÕµ½WM_NCDESTROYºóÊÕµ½wParamÎªSC_CLOSEµÄWM_SYSCOMMAND
+        // æœ‰æ—¶ä¼šåœ¨æ”¶åˆ°WM_NCDESTROYåæ”¶åˆ°wParamä¸ºSC_CLOSEçš„WM_SYSCOMMAND
         if( wParam == SC_CLOSE ) {
             ::PostQuitMessage(0L);
             bHandled = TRUE;
