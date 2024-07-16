@@ -9,7 +9,7 @@
 #pragma once
 
 #ifdef __GNUC__
-// 怎么都没找到min，max的头文件-_-
+// 鎬庝箞閮芥病鎵惧埌min锛宮ax鐨勫ご鏂囦欢-_-
 #ifndef min
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 #endif

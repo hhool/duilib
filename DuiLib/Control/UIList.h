@@ -329,7 +329,7 @@ public:
     bool IsExpanded() const;
     bool Expand(bool bExpand = true);
 
-    void Invalidate(); // Ö±½ÓCControl::Invalidate»áµ¼ÖÂ¹ö¶¯ÌõË¢ĞÂ£¬ÖØĞ´¼õÉÙË¢ĞÂÇøÓò
+    void Invalidate(); // ç›´æ¥CControl::Invalidateä¼šå¯¼è‡´æ»šåŠ¨æ¡åˆ·æ–°ï¼Œé‡å†™å‡å°‘åˆ·æ–°åŒºåŸŸ
     bool Activate();
 
     void DoEvent(TEventUI& event);
@@ -446,7 +446,7 @@ public:
     bool IsExpanded() const;
     bool Expand(bool bExpand = true);
 
-    void Invalidate(); // Ö±½ÓCControl::Invalidate»áµ¼ÖÂ¹ö¶¯ÌõË¢ĞÂ£¬ÖØĞ´¼õÉÙË¢ĞÂÇøÓò
+    void Invalidate(); // ç›´æ¥CControl::Invalidateä¼šå¯¼è‡´æ»šåŠ¨æ¡åˆ·æ–°ï¼Œé‡å†™å‡å°‘åˆ·æ–°åŒºåŸŸ
     bool Activate();
 
     void DoEvent(TEventUI& event);

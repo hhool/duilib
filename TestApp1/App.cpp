@@ -446,7 +446,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
 
     CFrameWindowWnd* pFrame = new CFrameWindowWnd();
     if( pFrame == NULL ) return 0;
-    pFrame->Create(NULL, _T("ÕâÊÇÒ»¸ö×î¼òµ¥µÄ²âÊÔÓÃexe£¬ÐÞ¸Ätest1.xml¾Í¿ÉÒÔ¿´µ½Ð§¹û"), UI_WNDSTYLE_FRAME|WS_CLIPCHILDREN, WS_EX_WINDOWEDGE);
+    pFrame->Create(NULL, _T("è¿™æ˜¯ä¸€ä¸ªæœ€ç®€å•çš„æµ‹è¯•ç”¨exeï¼Œä¿®æ”¹test1.xmlå°±å¯ä»¥çœ‹åˆ°æ•ˆæžœ"), UI_WNDSTYLE_FRAME|WS_CLIPCHILDREN, WS_EX_WINDOWEDGE);
     pFrame->CenterWindow();
     pFrame->ShowWindow(true);
     CPaintManagerUI::MessageLoop();

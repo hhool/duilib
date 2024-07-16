@@ -33,7 +33,7 @@ namespace DuiLib
 		LPCTSTR GetHotForeImage();
 		void SetHotForeImage(LPCTSTR pStrImage);
 
-		// ¶ÔÓ¦°´Å¥µÄ5¸ö×´Ì¬Í¼
+		// å¯¹åº”æŒ‰é’®çš„5ä¸ªçŠ¶æ€å›¾
 		void SetFiveStatusImage(LPCTSTR pStrImage);
 		void SetFadeAlphaDelta(BYTE uDelta);
 		BYTE GetFadeAlphaDelta();
