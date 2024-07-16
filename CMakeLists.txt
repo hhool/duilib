@@ -12,15 +12,25 @@ project(dui)
 
 message(STATUS," CMake project files for duilib")
 
-# this line is for UNICODE release,which is required by DuiDesigner 
-add_definitions(-DUNICODE -D_UNICODE)
+option(USE_UNICODE "Use unicode" ON)
+option(USE_SHARED "Use shared library" ON)
+option(USE_DEMO "Use demo" ON)
+option(USE_COPY "Use Copy" OFF)
+option(USE_COPY_RESOURCES "Use Copy Resources" OFF)
+
+if(USE_UNICODE)
+    # this line is for UNICODE release,which is required by DuiDesigner
+    add_definitions(-DUNICODE -D_UNICODE)
+endif()
 
 # add each CMake file
 add_subdirectory(duilib)
-add_subdirectory(360SafeDemo)
-add_subdirectory(FlashDemo)
-add_subdirectory(GameDemo)
-add_subdirectory(ListDemo)
-# add_subdirectory(MenuDemo) the sources in this project has error
-add_subdirectory(QQDemo)
-add_subdirectory(RichListDemo)
+if (USE_DEMO)
+    add_subdirectory(360SafeDemo)
+    add_subdirectory(FlashDemo)
+    add_subdirectory(GameDemo)
+    add_subdirectory(ListDemo)
+    add_subdirectory(MenuDemo)
+    add_subdirectory(QQDemo)
+    add_subdirectory(RichListDemo)
+endif()

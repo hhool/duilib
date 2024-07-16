@@ -11,6 +11,8 @@ add_dependencies(ListDemo duilib)
 target_link_libraries(ListDemo duilib)
 set_target_properties(ListDemo PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
 
+if (USE_COPY)
 add_custom_command(TARGET ListDemo POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_if_different
   ${PROJECT_BINARY_DIR}/bin/ListDemo.exe ${PROJECT_SOURCE_DIR}/bin/ListDemo.exe)
+endif()

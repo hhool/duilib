@@ -35,7 +35,7 @@ void CMenuNotify::Notify(TNotifyUI& msg)
 					switch (index)
 					{
 					case 0:
-						PostMessage(pMainFrame->m_hWnd,WM_CLICKABOUT,0,0);
+						//PostMessage(pMainFrame->m_hWnd,WM_CLICKABOUT,0,0);
 						break;
 					}
 
