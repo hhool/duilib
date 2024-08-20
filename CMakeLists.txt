@@ -6,7 +6,7 @@
 #  file for each app is under the related sub-dir
 #
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
 project(dui)
 
