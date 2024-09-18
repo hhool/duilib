@@ -884,6 +884,39 @@ CDuiString CControlUI::GetVirtualWnd() const
 	return str;
 }
 
+
+bool CControlUI::IsIncludeClassControl(LPCTSTR szControlClass)
+{
+	if (!GetInterface(DUI_CTR_CONTAINER)) return false;
+	CContainerUI *pContain = static_cast<CContainerUI *>(GetInterface(DUI_CTR_CONTAINER));
+	int nChildCount = pContain->GetCount();
+	for (int i = 0; i < nChildCount; ++i)
+	{
+		CControlUI *pChildControl = pContain->GetItemAt(i);
+		if (pChildControl && pChildControl->GetInterface(szControlClass))
+			return true;
+		else if (pChildControl &&
+			pChildControl->GetInterface(DUI_CTR_CONTAINER) &&
+			pChildControl->IsIncludeClassControl(szControlClass))
+			return true;
+	}
+	return false;
+}
+
+int CControlUI::GetInsideControl(CDuiPtrArray &ptrAry, CControlUI *pControl, LPCTSTR szControlClass)
+{
+	if (pControl == NULL) return 0;
+	if (pControl->GetInterface(szControlClass)) ptrAry.Add(pControl);
+	if (pControl->GetInterface(DUI_CTR_CONTAINER))
+	{
+		CContainerUI *pContain = static_cast<CContainerUI *>(pControl);
+		for (int i = 0; i < pContain->GetCount(); ++i)
+		{
+			GetInsideControl(ptrAry, pContain->GetItemAt(i), szControlClass);
+		}
+	}
+	return ptrAry.GetSize();
+}
 CDuiString CControlUI::GetAttribute(LPCTSTR pstrName)
 {
     return _T("");

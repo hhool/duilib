@@ -61,3 +61,46 @@ bin/*.ipdb
 
 
 # Precompiled Headers
+/bin
+/360SafeDemo/Debug
+/360SafeDemo/Release
+/DuiLib/Debug
+/DuiLib/Release
+/FlashDemo/Debug
+/FlashDemo/Release
+/GameDemo/Debug
+/GameDemo/Release
+/ListDemo/Debug
+/ListDemo/Release
+/QQDemo/Debug
+/QQDemo/Release
+/RichListDemo/Debug
+/RichListDemo/Release
+/MenuDemo/Debug
+/MenuDemo/Release
+
+/.vs
+/.vscode
+/.idea
+
+/SrcCapture/Debug
+/SrcCapture/Release
+/TestApp1/Debug
+/TestApp1/Release
+
+/ipch
+/Debug
+/Release
+/Debug64
+/Release64
+
+/out
+/Lib
+/Build
+
+/DuiLib.VC*
+/DuiLib.sdf
+/DuiLib/Build
+
+/ScrCapture/Debug/
+/ScrCapture/Release/

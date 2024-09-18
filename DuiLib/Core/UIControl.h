@@ -170,6 +170,10 @@ public:
 	void SetVirtualWnd(LPCTSTR pstrValue);
 	CDuiString GetVirtualWnd() const;
 
+	//�����ӿ�
+	// ��ȡ�ؼ�pControl������szControlClass�Ŀؼ�����
+	int GetInsideControl(CDuiPtrArray &ptrAry, CControlUI *pControl, LPCTSTR szControlClass);
+	bool IsIncludeClassControl(LPCTSTR szControlClass);
 public:
     CEventSource OnInit;
     CEventSource OnDestroy;
