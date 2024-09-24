@@ -32,6 +32,8 @@ namespace DuiLib
 		void SetAutoSelAll(bool bAutoSelAll);
 		void SetNumberOnly(bool bNumberOnly);
 		bool IsNumberOnly() const;
+		void SetNumberOnlyEx(bool bNumberOnlyEx);
+		bool IsNumberOnlyEx() const;
 		int GetWindowStyls() const;
 		HWND GetNativeEditHWND() const;
 
@@ -72,6 +74,7 @@ namespace DuiLib
 		UINT m_uButtonState;
 		DWORD m_dwEditbkColor;
 		int m_iWindowStyls;
+		bool m_bNumberExOnly;
 
 		TDrawInfo m_diNormal;
 		TDrawInfo m_diHot;

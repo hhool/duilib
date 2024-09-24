@@ -40,10 +40,10 @@ namespace DuiLib
 		m_pOwner = pOwner;
 		RECT rcPos = CalPos();
 		UINT uStyle = WS_CHILD | ES_AUTOHSCROLL | pOwner->GetWindowStyls();
-        UINT uTextStyle = m_pOwner->GetTextStyle();
-        if(uTextStyle & DT_LEFT) uStyle |= ES_LEFT;
-        else if(uTextStyle & DT_CENTER) uStyle |= ES_CENTER;
-        else if(uTextStyle & DT_RIGHT) uStyle |= ES_RIGHT;
+		UINT uTextStyle = m_pOwner->GetTextStyle();
+		if(uTextStyle & DT_LEFT) uStyle |= ES_LEFT;
+		else if(uTextStyle & DT_CENTER) uStyle |= ES_CENTER;
+		else if(uTextStyle & DT_RIGHT) uStyle |= ES_RIGHT;
 		if( m_pOwner->IsPasswordMode() ) uStyle |= ES_PASSWORD;
 		Create(m_pOwner->GetManager()->GetPaintWindow(), NULL, uStyle, 0, rcPos);
 
@@ -76,7 +76,7 @@ namespace DuiLib
 			Edit_SetSel(m_hWnd, nSize, nSize);
 		}
 
-		m_bInit = true;    
+		m_bInit = true;	
 	}
 
 	RECT CEditWnd::CalPos()
@@ -206,8 +206,32 @@ namespace DuiLib
 				return 0;
 			}
 			bHandled = FALSE;
-		}
-		else bHandled = FALSE;
+		} else if (uMsg == WM_CHAR) {
+		  if (m_pOwner->IsNumberOnlyEx()) {
+				char cur = (char)wParam;
+				CDuiString curText = m_pOwner->GetText();
+				if (cur == 8 || cur == 22 || cur == 24 || cur == 26 ||
+					cur == 1) {  // backspace ctrl+v ctrl+x ctrl+z ctrl+a
+					  bHandled = FALSE;
+				} else {
+				  if (curText.IsEmpty()) {
+				if (cur == '.' || (cur < 48 || cur > 57))
+				  return false;
+			  } else {
+				if (cur == '.') {
+				  if (curText.Find('.') > 0) {
+					return false;
+				  }
+				} else if (cur < 48 || cur > 57)
+				  return false;
+			  }
+			  bHandled = FALSE;
+			}
+		  } else {
+			bHandled = FALSE;
+		  }
+		} else
+		  bHandled = FALSE;
 		if( !bHandled ) return CWindowWnd::HandleMessage(uMsg, wParam, lParam);
 		return lRes;
 	}
@@ -245,7 +269,7 @@ namespace DuiLib
 
 	CEditUI::CEditUI() : m_pWindow(NULL), m_uMaxChar(255), m_bReadOnly(false), 
 		m_bPasswordMode(false), m_cPasswordChar(_T('*')), m_bAutoSelAll(false), m_uButtonState(0), 
-		m_dwEditbkColor(0xFFFFFFFF), m_iWindowStyls(0)
+		m_dwEditbkColor(0xFFFFFFFF), m_iWindowStyls(0), m_bNumberExOnly(false)
 	{
 		SetTextPadding(CDuiRect(4, 3, 4, 3));
 		SetBkColor(0xFFFFFFFF);
@@ -343,33 +367,33 @@ namespace DuiLib
 		{
 			return;
 		}
-        if( event.Type == UIEVENT_MOUSEENTER )
-        {
-            if( ::PtInRect(&m_rcItem, event.ptMouse ) ) {
-                if( IsEnabled() ) {
-                    if( (m_uButtonState & UISTATE_HOT) == 0  ) {
-                        m_uButtonState |= UISTATE_HOT;
-                        Invalidate();
-                    }
-                }
-            }
-        }
-        if( event.Type == UIEVENT_MOUSELEAVE )
-        {
-            if( !::PtInRect(&m_rcItem, event.ptMouse ) ) {
-                if( IsEnabled() ) {
-                    if( (m_uButtonState & UISTATE_HOT) != 0  ) {
-                        m_uButtonState &= ~UISTATE_HOT;
-                        Invalidate();
-                    }
-                }
-                if (m_pManager) m_pManager->RemoveMouseLeaveNeeded(this);
-            }
-            else {
-                if (m_pManager) m_pManager->AddMouseLeaveNeeded(this);
-                return;
-            }
-        }
+		if( event.Type == UIEVENT_MOUSEENTER )
+		{
+			if( ::PtInRect(&m_rcItem, event.ptMouse ) ) {
+				if( IsEnabled() ) {
+					if( (m_uButtonState & UISTATE_HOT) == 0  ) {
+						m_uButtonState |= UISTATE_HOT;
+						Invalidate();
+					}
+				}
+			}
+		}
+		if( event.Type == UIEVENT_MOUSELEAVE )
+		{
+			if( !::PtInRect(&m_rcItem, event.ptMouse ) ) {
+				if( IsEnabled() ) {
+					if( (m_uButtonState & UISTATE_HOT) != 0  ) {
+						m_uButtonState &= ~UISTATE_HOT;
+						Invalidate();
+					}
+				}
+				if (m_pManager) m_pManager->RemoveMouseLeaveNeeded(this);
+			}
+			else {
+				if (m_pManager) m_pManager->AddMouseLeaveNeeded(this);
+				return;
+			}
+		}
 		CLabelUI::DoEvent(event);
 	}
 
@@ -430,6 +454,16 @@ namespace DuiLib
 		return m_iWindowStyls&ES_NUMBER ? true:false;
 	}
 
+	void CEditUI::SetNumberOnlyEx(bool bNumberOnlyEx)
+	{
+		m_bNumberExOnly = bNumberOnlyEx;
+	}
+
+	bool CEditUI::IsNumberOnlyEx() const
+	{
+		return m_bNumberExOnly;
+	}
+	
 	int CEditUI::GetWindowStyls() const 
 	{
 		return m_iWindowStyls;
@@ -558,11 +592,11 @@ namespace DuiLib
 		CControlUI::SetPos(rc, bNeedInvalidate);
 		if( m_pWindow != NULL ) {
 			RECT rcPos = m_pWindow->CalPos();
-            if (::IsRectEmpty(&rcPos)) ::ShowWindow(m_pWindow->GetHWND(), SW_HIDE);
-            else {
-                ::SetWindowPos(m_pWindow->GetHWND(), NULL, rcPos.left, rcPos.top, rcPos.right - rcPos.left, 
+			if (::IsRectEmpty(&rcPos)) ::ShowWindow(m_pWindow->GetHWND(), SW_HIDE);
+			else {
+				::SetWindowPos(m_pWindow->GetHWND(), NULL, rcPos.left, rcPos.top, rcPos.right - rcPos.left, 
 				rcPos.bottom - rcPos.top, SWP_NOZORDER | SWP_NOACTIVATE | SWP_SHOWWINDOW); 
-            }
+			}
 		}
 	}
 
@@ -570,12 +604,12 @@ namespace DuiLib
 	{
 		CControlUI::Move(szOffset, bNeedInvalidate);
 		if( m_pWindow != NULL ) {
-            RECT rcPos = m_pWindow->CalPos();
-            if (::IsRectEmpty(&rcPos)) ::ShowWindow(m_pWindow->GetHWND(), SW_HIDE);
-            else {
-                ::SetWindowPos(m_pWindow->GetHWND(), NULL, rcPos.left, rcPos.top, rcPos.right - rcPos.left, 
-                    rcPos.bottom - rcPos.top, SWP_NOZORDER | SWP_NOACTIVATE | SWP_SHOWWINDOW); 
-            }      
+			RECT rcPos = m_pWindow->CalPos();
+			if (::IsRectEmpty(&rcPos)) ::ShowWindow(m_pWindow->GetHWND(), SW_HIDE);
+			else {
+				::SetWindowPos(m_pWindow->GetHWND(), NULL, rcPos.left, rcPos.top, rcPos.right - rcPos.left, 
+					rcPos.bottom - rcPos.top, SWP_NOZORDER | SWP_NOACTIVATE | SWP_SHOWWINDOW); 
+			}	  
 		}
 	}
 
@@ -600,6 +634,7 @@ namespace DuiLib
 	{
 		if( _tcscmp(pstrName, _T("readonly")) == 0 ) SetReadOnly(_tcscmp(pstrValue, _T("true")) == 0);
 		else if( _tcscmp(pstrName, _T("numberonly")) == 0 ) SetNumberOnly(_tcscmp(pstrValue, _T("true")) == 0);
+		else if( _tcscmp(pstrName, _T("numberonlyex")) == 0 ) SetNumberOnlyEx(_tcscmp(pstrValue, _T("true")) == 0);
 		else if( _tcscmp(pstrName, _T("password")) == 0 ) SetPasswordMode(_tcscmp(pstrValue, _T("true")) == 0);
 		else if( _tcscmp(pstrName, _T("autoselall")) == 0 ) SetAutoSelAll(_tcscmp(pstrValue, _T("true")) == 0);	
 		else if( _tcscmp(pstrName, _T("maxchar")) == 0 ) SetMaxChar(_ttoi(pstrValue));
